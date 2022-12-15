@@ -1,3 +1,8 @@
+//Nodes are invisible objects that we place on the map
+//to direct the flow of mobs. When a mob collides with
+//a node object, it will change direction according to
+//the node's instructions.
+
 class Node {
   //          direction variables
   float x, y, dx, dy;
@@ -8,30 +13,12 @@ class Node {
     this.dx = dx;
     this.dy = dy;
   }
-  
+
   // debugging function to make sure nodes are working correctly
   void show() {
     fill(0);
     circle(x, y, 30);
     stroke(0);
-    line(x, y, x+dx*50, y+dy*50);
+    line(x, y, x+dx*10, y+dy*10);
   }
-}
-
-
-// Collections of objects
-Node[] nodes;
-
-void makeNodes() {
-  nodes = new Nodes[9];
-  
-  nodes[0] = new Node();
-  nodes[1] = new Node();
-  nodes[2] = new Node();
-  nodes[3] = new Node();
-  nodes[4] = new Node();
-  nodes[5] = new Node();
-  nodes[6] = new Node();
-  nodes[7] = new Node();
-  nodes[8] = new Node();
 }
