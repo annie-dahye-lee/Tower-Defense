@@ -2,6 +2,7 @@
 
 void intro() {
   intro.show();
-  //background(white);
   start.show();
+  
+  if (start.clicked) mode = MAP_SELECTION;
 }

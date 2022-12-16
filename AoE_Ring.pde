@@ -17,6 +17,7 @@ class AoE_Ring { // area of effect ring
   }
 
   void act() {
+    noStroke();
     bullets.add(new bulletRing(this.x, this.y));
   }
 

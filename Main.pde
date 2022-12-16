@@ -16,9 +16,9 @@ final int PLAY          = 2;
 final int BUILD         = 3;
 final int GAMEOVER      = 4;
 int mode;
-int map;
+int map = 1;
 int nodes;
-int wave = 1;
+int wave = 0;
 int elixir = 30;
 int lives = 3;
 
@@ -55,6 +55,7 @@ public ArrayList<Mob> mobs;
 ArrayList<Tower> towers;
 ArrayList<AoE_Ring> rings;
 ArrayList<Bullet> bullets;
+ArrayList<bulletRing> bulletRings;
 
 //Images and Gifs
 PImage bg, bg2;
@@ -85,7 +86,7 @@ void initializeModes() {
   rectMode(CENTER);
   //imageMode(CENTER);
   textAlign(CENTER, CENTER);
-  mode = GAMEOVER; //MAP_SELECTION;
+  mode = INTRO; //MAP_SELECTION;
 }
 
 void initializeVariables() {
@@ -103,6 +104,7 @@ void initializeVariables() {
   towers = new ArrayList<Tower>();
   rings = new ArrayList<AoE_Ring>();
   bullets = new ArrayList<Bullet>();
+  bulletRings = new ArrayList<bulletRing>();
 }
 
 //Plot the nodes on the map
@@ -122,20 +124,25 @@ void makeNodes() {
   map1nodes[11] = new Node(619, 515-28, 1, 0);
   map1nodes[12] = new Node(743, 515-28, 0, -1);
   map1nodes[13] = new Node(745, 130-74, 1, 0);
-  
+
   map2nodes = new Node[5];
+  map2nodes[0] = new Node(32, 190, 1, 0);
+  map2nodes[1] = new Node(145, 190, 0, 1);
+  map2nodes[2] = new Node(145, 500, 1, 0);
+  map2nodes[3] = new Node(450, 500, 0, -1);
+  map2nodes[4] = new Node(450, 355, 1, 0);
 }
 
 void makeButtons() {
   //INTRO - Start
   start = new Button("START", "", width/2, 450, 200, 100, black, white, false);
-  
+
   // MAP_SELECTION
   selectMap1 = new Button("DUNGEON", "", 300, 470, 200, 100, grey, white, false);
   selectMap2 = new Button("FIELD", "", 800, 470, 200, 100, green, white, false);
-  
-  tryAgain = new Button("TRY AGAIN", "", width/2, 470, 200, 100, pink, black, false);
-  
+
+  tryAgain = new Button("TRY AGAIN", "", width/2, 470, 200, 100, grey, white, false);
+
   //next - Next Wave
   next = new Button("NEXT WAVE", "", 970, 640, 220, 60, black, white, false);
   //build - To build mode, Buy Sniper, Buy Gun, Buy AoE
@@ -166,4 +173,6 @@ void draw() {
   } else if (mode == GAMEOVER) {
     gameOver();
   }
+
+  println(mode);
 }

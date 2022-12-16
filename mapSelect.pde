@@ -11,10 +11,9 @@ void UI() {
 
 void mapClicks() {
   if (selectMap1.clicked) {
+    mode = PLAY;
     map = 1;
     nodes = 1;
-    mode = PLAY;
-    println("hi");
   }
   if (selectMap2.clicked) {
     map = 2;

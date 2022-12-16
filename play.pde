@@ -22,18 +22,18 @@ void drawMap1() {
 }
 
 void drawMap2() {
-  image(bg, 560, 300, width+90, height+200); // dungeon floor
   image(map2, 300, 390, width, height+90);
 
   int i = 0;
-  while (i < 14) {
-    //map2nodes[i].show();
+  while (i < 5) {
+    map2nodes[i].show();
     i++;
   }
 }
 
 void playUI() {
   fill(grey);
+  noStroke();
   rect(965, 350, 270, height-20, 10);
   next.show();
   fill(black);
@@ -83,7 +83,7 @@ void animate() {
     myBullet.act();
     i++;
   }
-  
+
   if (lives <= 0) mode = GAMEOVER;
 }
 
@@ -92,19 +92,26 @@ void playClicks() {
     wave++;
     currNumOfMobs = 0;
   }
-  if (buildModeButton.clicked) mode = BUILD;
+
+  if (buildModeButton.clicked) {
+    mode = BUILD;
+    println("build");
+  }
 }
 
 void addWave() { // add wave
   while (mobs.size() < wave && currNumOfMobs != wave) {
-    mobs.add(new Mob(this.x, 368, 5, 0, 3, white));
+    if (map == 1) mobs.add(new Mob(10, 368, 5, 0, 3, white));
+    if (map == 2) mobs.add(new Mob(17, 187, 5, 0, 3, white));
     currNumOfMobs++;
     this.x -= 80;
 
     // chonky
     if (wave % 3 == 0 && currNumOfMobs != wave) {
       for (int i = 0; i < wave/3; i++) {
-        mobs.add(new Chonky(0, 368, 5, 0)); // add new Mob obj to mobs ArrayList
+        if (map == 1) mobs.add(new Chonky(10, 368, 5, 0)); // add new Mob obj to mobs ArrayList
+        if (map == 2) mobs.add(new Chonky(10, 368, 5, 0)); // add new Mob obj to mobs ArrayList
+
         currNumOfMobs++;
       }
     }

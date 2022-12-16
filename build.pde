@@ -1,8 +1,7 @@
 //This function draws the BUILD screen
 
 void build() {
-  mode = BUILD;
-  drawMap1();
+  //drawMap1();
   animate();
   buildUI();
   buildModeIndicator();
@@ -10,7 +9,12 @@ void build() {
 }
 
 void buildUI() {
+
+  //if (map == 1) drawMap1();
+  //if (map == 2) drawMap2();
+
   fill(grey);
+  noStroke();
   rect(965, 350, 270, height-20, 10);
   fill(black);
   textSize(35);
@@ -20,6 +24,7 @@ void buildUI() {
   buySniperTowerButton.show();
   buyAoETowerButton.show();
 }
+
 
 void buildModeIndicator() {
 }

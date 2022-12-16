@@ -33,8 +33,6 @@ class Mob {
 
   void show() {
     fill(c);
-    //strokeWeight(3);
-    //stroke(black);
     noStroke();
     circle(x, y, d);
     healthbar();
@@ -45,12 +43,25 @@ class Mob {
     y += vy*speed;
 
     int i = 0; // array length
-    while (i < map1nodes.length) {
-      if (dist(map1nodes[i].x, map1nodes[i].y, x, y) < 7) { // check distance between mob position and nodes position
-        vx = map1nodes[i].dx * speed; // change mob direction according to node direction
-        vy = map1nodes[i].dy * speed;
+    if (map == 1) {
+      while (i < map1nodes.length) {
+        if (dist(map1nodes[i].x, map1nodes[i].y, x, y) < 10) { // check distance between mob position and nodes position
+          vx = map1nodes[i].dx * speed; // change mob direction according to node direction
+          vy = map1nodes[i].dy * speed;
+        }
+        i++;
       }
-      i++;
+    }
+
+    i = 0;
+    if (map == 2) {
+      while (i < map2nodes.length) {
+        if (dist(map2nodes[i].x, map2nodes[i].y, x, y) < 10) { // check distance between mob position and nodes position
+          vx = map2nodes[i].dx * speed; // change mob direction according to node direction
+          vy = map2nodes[i].dy * speed;
+        }
+        i++;
+      }
     }
 
     // BULLETS
@@ -64,20 +75,34 @@ class Mob {
       i++;
     }
 
-    ////AOE RING
-    //i = 0;
-    //while (i < rings.size()) {
-    //  AoE_Ring ring = rings.get(i); //    sum of radii
-    //  if (dist(x, y, ring.x, ring.y) < (ring.d/2)) {
-    //    this.hp -= 0.1;
-    //    ring.hp = 0;
-    //    println(this.hp);
-    //    //ring.cooldown = 0;
-    //  }
-
-    //  i++;
-    //}
+    // BULLET RINGS
+    i = 0;
+    while (i < bulletRings.size()) {
+      bulletRing ring = bulletRings.get(i); //               sum of radii
+      while (i < mobs.size()) {
+        if (dist(ring.x, ring.y, x, y) < (d/2 + (ring.d)/2)) {
+          bullets.remove(i);
+          hp -= 1;
+        }
+        i++;
+      }
+    }
   }
+
+  ////AOE RING
+  //i = 0;
+  //while (i < rings.size()) {
+  //  AoE_Ring ring = rings.get(i); //    sum of radii
+  //  if (dist(x, y, ring.x, ring.y) < (ring.d/2)) {
+  //    this.hp -= 0.1;
+  //    ring.hp = 0;
+  //    println(this.hp);
+  //    //ring.cooldown = 0;
+  //  }
+
+  //  i++;
+  //}
+
 
   //AoE_Ring ring = rings.get(i);
   //if (dist(x, y, ring.x, ring.y) < (ring.d/2))
