@@ -22,6 +22,9 @@ void click() {
 
   if (buildModeButton.clicked) {
     mode = BUILD;
-    println("build");
+  }
+
+  if (playButton.clicked) {
+    mode = PLAY;
   }
 }

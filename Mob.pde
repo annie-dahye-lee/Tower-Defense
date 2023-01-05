@@ -45,7 +45,7 @@ class Mob {
     int i = 0; // array length
     if (map == 1) {
       while (i < map1nodes.length) {
-        if (dist(map1nodes[i].x, map1nodes[i].y, x, y) < 10) { // check distance between mob position and nodes position
+        if (dist(map1nodes[i].x, map1nodes[i].y, x, y) < 5) { // check distance between mob position and nodes position
           vx = map1nodes[i].dx * speed; // change mob direction according to node direction
           vy = map1nodes[i].dy * speed;
         }
@@ -75,18 +75,7 @@ class Mob {
       i++;
     }
 
-    // BULLET RINGS
-    i = 0;
-    while (i < bulletRings.size()) {
-      bulletRing ring = bulletRings.get(i); //               sum of radii
-      while (i < mobs.size()) {
-        if (dist(ring.x, ring.y, x, y) < (d/2 + (ring.d)/2)) {
-          bullets.remove(i);
-          hp -= 1;
-        }
-        i++;
-      }
-    }
+    
   }
 
   ////AOE RING

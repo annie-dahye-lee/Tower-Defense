@@ -10,6 +10,8 @@ class Button {
   boolean towerButton;
   color highlight, normal;
   String text;
+  String price;
+  String title;
   String description;
   PImage img;
 
@@ -24,7 +26,7 @@ class Button {
     normal = norm;
     clicked = false;
     text = t;
-    this.description = price;
+    this.price = price;
   }
 
   //constructor
@@ -37,7 +39,7 @@ class Button {
     normal = norm;
     clicked = false;
     text = t;
-    this.description = price;
+    this.price = price;
   }
 
   Button(PImage pic, int _x, int _y, int _w, int _h, color norm, color high) {
@@ -45,10 +47,19 @@ class Button {
     img = pic;
   }
 
-  Button(PImage pic, int _x, int _y, int _w, int _h, color norm, color high, int textSize) {
-    this("", "", _x, _y, _w, _h, norm, high, false);
-    this.textSize = textSize;
+  Button(PImage pic, String price, String title, String description, int _x, int _y, int _w, int _h, color norm, color high, boolean towerButton) {
+    this.towerButton = false;
+    x = _x;
+    y = _y;
+    w = _w;
+    h = _h;
+    highlight = high;
+    normal = norm;
+    clicked = false;
     img = pic;
+    this.price = price;
+    this.title = title;
+    this.description = description;
   }
 
   //Behaviour Functions
@@ -60,6 +71,7 @@ class Button {
 
   void drawBody() {
     // TACTILE
+    noStroke();
     if (this.towerButton && mouseX > x-w/2 && mouseX < x+w/2 && mouseY > y-h/2 && mouseY < y+h/2) {
       tactile();
     } else {
@@ -72,20 +84,32 @@ class Button {
       fill(normal);
     }
 
-    stroke(0);
-    strokeWeight(4);
     rect(x, y, w, h, 30);
   }
 
   void tactile() {
     fill(highlight);
-    textSize(40);
+    textSize(10);
     fill(black);
-    text(description, 880+87, y+100);
+    textFont(dHomicide);
+    text(price, 880+87, y+140);
+
+    if (this.title != null) {
+      fill(black);
+      textSize(55);
+      text(title, 880+87, 230);
+    }
+
+    if (this.description != null) {
+      fill(black);
+      textSize(30);
+      text(description, 880+87, 450, 230, 500);
+    }
   }
 
   void drawLabel() {
     textAlign(CENTER, CENTER);
+    textFont(dHomicide);
     if (mouseX > x-w/2 && mouseX < x+w/2 && mouseY > y-h/2 && mouseY < y+h/2) {
       fill(normal);
     } else {

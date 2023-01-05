@@ -1,24 +1,29 @@
 //This function draws the BUILD screen
 
 void build() {
-  //drawMap1();
-  animate();
+  drawMap();
   buildUI();
+  animate();
   buildModeIndicator();
   buildClicks();
 }
 
+void drawMap() {
+  if (map == 1) drawMap1();
+  if (map == 2) drawMap2();
+}
+
 void buildUI() {
-
-  //if (map == 1) drawMap1();
-  //if (map == 2) drawMap2();
-
   fill(grey);
   noStroke();
   rect(965, 350, 270, height-20, 10);
+  
   fill(black);
-  textSize(35);
-  text("elixir: " + elixir, width-130, 50);
+  textFont(script);
+  text("elixir   " + elixir, width-130, 50);
+  textFont(tandy);
+  text(":", width-120, 50);
+  
   playButton.show();
   buyGunTowerButton.show();
   buySniperTowerButton.show();
@@ -51,5 +56,4 @@ void buildClicks() {
     elixir -= price[2];
   }
 
-  if (playButton.clicked) mode = PLAY;
 }

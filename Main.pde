@@ -1,3 +1,4 @@
+
 //Tower Defense Game (change name later)
 //Annie Lee
 //Programming 12
@@ -34,10 +35,12 @@ final int[] price = {10, 20, 30};
 color white = #ffffff;
 color black = #000000;
 color grey = #cccccc;
-color blue = #0000FF;
+color blue = #0353a4;
+color lBlue = #d9ed92;
 color purple = #A020F0;
+color dPurple = #32004f;
 color pink = #FFC0CB;
-color red = #B90E0A;
+color red = #00406c;
 color green = #378805;
 
 //Mouse & Keyboard interaction variables
@@ -53,20 +56,28 @@ Node[] map2nodes;
 
 public ArrayList<Mob> mobs;
 ArrayList<Tower> towers;
-ArrayList<AoE_Ring> rings;
 ArrayList<Bullet> bullets;
-ArrayList<bulletRing> bulletRings;
 
 //Images and Gifs
-PImage bg, bg2;
-PImage path;
-
 PImage map1, map2;
 
+PImage bg, bg2;
+PImage path;
+PImage waterMageMagic;
+
+PImage pWaterMage;
+PImage pGuitarShooter;
+PImage pDarkWizard;
+
 Gif intro;
+Gif waterMage;
+Gif guitarShooter;
+Gif darkWizard;
 
 //Fonts
-
+PFont dHomicide;
+PFont script;
+PFont tandy;
 
 // ===================== SETUP =========================
 
@@ -79,6 +90,9 @@ void setup() {
   initializeVariables();
   makeButtons();
   makeNodes();
+
+  mode = BUILD; //MAP_SELECTION;
+  map = 1;
 }
 
 void initializeModes() {
@@ -86,44 +100,53 @@ void initializeModes() {
   rectMode(CENTER);
   //imageMode(CENTER);
   textAlign(CENTER, CENTER);
-  mode = INTRO; //MAP_SELECTION;
 }
 
 void initializeVariables() {
   //Load Images & Gifs
-  intro = new Gif("intro2/frame_", "_delay-0.02s.gif", 13, 2, width/2, height/2, width, height);
+  intro = new Gif("intro2/frame_", "_delay-0.02s.gif", 13, 1, width/2, height/2, width, height);
+  waterMage = new Gif("water_mage/frame_", "_delay-0.08s.gif", 13, 1, width/2, height/2, width, height);
+  guitarShooter = new Gif("guitarShooter/frame_", "_delay-0.06s.gif", 150, 1, width/2, height/2, width, height);
+  darkWizard = new Gif("darkWizard/frame_", "_delay-0.04s.gif", 50, 1, width/2, height/2, width, height);
+
   bg = loadImage("map.png");
   path = loadImage("path.png");
   map2 = loadImage("map2.png");
+  waterMageMagic = loadImage("waterMageMagic.png");
+
+  pWaterMage = loadImage("waterMage.gif");
+  pGuitarShooter = loadImage("guitarShooter.gif");
+  pDarkWizard = loadImage("pDarkWizard.png");
 
   //Load Fonts
+  dHomicide = createFont("DoubleHomicide.ttf", 50);
+  script = createFont("script.otf", 42);
+  tandy = createFont("tandy.ttf", 42);
 
   //Create Collections of Objects
   map1nodes = new Node[9];
   mobs = new ArrayList<Mob>(); // ArrayList<ObjType> name = new ArrayList<ObjType>();
   towers = new ArrayList<Tower>();
-  rings = new ArrayList<AoE_Ring>();
   bullets = new ArrayList<Bullet>();
-  bulletRings = new ArrayList<bulletRing>();
 }
 
 //Plot the nodes on the map
 void makeNodes() {
   map1nodes = new Node[14];
-  map1nodes[0] = new Node(85, 400-32, 0, 1);
-  map1nodes[1] = new Node(85, 440-38, 1, 0);
-  map1nodes[2] = new Node(414, 440-38, 0, 1);
-  map1nodes[3] = new Node(414, 515-17, -1, 0);
-  map1nodes[4] = new Node(134, 515-17, 0, 1);
-  map1nodes[5] = new Node(134, 595-7, 1, 0);
-  map1nodes[6] = new Node(496, 595-7, 0, -1);
-  map1nodes[7] = new Node(496, 365-52, -1, 0);
-  map1nodes[8] = new Node(175, 365-52, 0, -1);
-  map1nodes[9] = new Node(175, 210-63, 1, 0);
-  map1nodes[10] = new Node(619, 210-62, 0, 1);
-  map1nodes[11] = new Node(619, 515-28, 1, 0);
-  map1nodes[12] = new Node(743, 515-28, 0, -1);
-  map1nodes[13] = new Node(745, 130-74, 1, 0);
+  map1nodes[0] = new Node(70, 384, 0, 1);
+  map1nodes[1] = new Node(72, 426, 1, 0);
+  map1nodes[2] = new Node(435, 424, 0, 1);
+  map1nodes[3] = new Node(431, 534, -1, 0);
+  map1nodes[4] = new Node(126, 533, 0, 1);
+  map1nodes[5] = new Node(126, 634, 1, 0);
+  map1nodes[6] = new Node(517, 634, 0, -1);
+  map1nodes[7] = new Node(517, 315, -1, 0);
+  map1nodes[8] = new Node(169, 313, 0, -1);
+  map1nodes[9] = new Node(169, 135, 1, 0);
+  map1nodes[10] = new Node(648, 135, 0, 1);
+  map1nodes[11] = new Node(650, 522, 1, 0);
+  map1nodes[12] = new Node(785, 522, 0, -1);
+  map1nodes[13] = new Node(785, 123, 1, 0);
 
   map2nodes = new Node[5];
   map2nodes[0] = new Node(32, 190, 1, 0);
@@ -135,24 +158,25 @@ void makeNodes() {
 
 void makeButtons() {
   //INTRO - Start
-  start = new Button("START", "", width/2, 450, 200, 100, black, white, false);
+  start = new Button("START", "", width/2, 450, 300, 100, black, white, false);
 
   // MAP_SELECTION
-  selectMap1 = new Button("DUNGEON", "", 300, 470, 200, 100, grey, white, false);
-  selectMap2 = new Button("FIELD", "", 800, 470, 200, 100, green, white, false);
+  selectMap1 = new Button("THE DUNGEON", "", 300, 470, 250, 125, grey, white, false);
+  selectMap2 = new Button("THE FIELD", "", 800, 470, 250, 125, green, white, false);
 
   tryAgain = new Button("TRY AGAIN", "", width/2, 470, 200, 100, grey, white, false);
 
   //next - Next Wave
   next = new Button("NEXT WAVE", "", 970, 640, 220, 60, black, white, false);
   //build - To build mode, Buy Sniper, Buy Gun, Buy AoE
-  buildModeButton = new Button("BUILD", "", 970, 370, 220, 60, black, white, false);
+  buildModeButton = new Button("BUILD", "", 970, 550, 220, 60, black, white, false);
   // gun tower
-  buyGunTowerButton = new Button("GUN", "$10", 878, 130, 80, 65, black, white, true);
+  //PImage pic, String t, String price, int _x, int _y, int _w, int _h, color norm, color high, boolean towerButton
+  buyGunTowerButton = new Button(pWaterMage, "$10", "Water Mage", "The mage is an ancient being who harnesses the element of water.", 878, 160, 80, 65, lBlue, white, true);
   // sniper tower
-  buySniperTowerButton = new Button("SNIPER", "$20", 880+87, 130, 80, 65, black, white, true);
+  buySniperTowerButton = new Button(pGuitarShooter, "$20", "Mystic Music", "This music elf is a mystical being who uses their instrument gifted from the gods to fight evil.", 880+87, 160, 80, 65, red, white, true);
   // aoe tower
-  buyAoETowerButton = new Button("AoE RING", "$30", 880+87*2, 130, 80, 65, black, white, true);
+  buyAoETowerButton = new Button(pDarkWizard, "$30", "Dark Wizard", "The wizard is a mysterious being who uses an unknown power to create high energy rings of dark magic.", 880+87*2, 160, 80, 65, dPurple, white, true);
   // play - Go from build to play
   playButton = new Button("PLAY", "", 970, 640, 220, 60, black, white, false);
   //GAMEOVER - Reset
@@ -174,5 +198,5 @@ void draw() {
     gameOver();
   }
 
-  println(mode);
+  // println(mouseX + ", " + mouseY);
 }

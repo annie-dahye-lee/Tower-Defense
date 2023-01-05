@@ -13,8 +13,8 @@ class Bullet {
     this.d = d;
     this.c = c;
   }
-  
-   Bullet(float x, float y, float vx, float vy, int d) {
+
+  Bullet(float x, float y, float vx, float vy, int d) {
     this.x = x;
     this.y = y;
     this.vx = vx;
@@ -28,33 +28,16 @@ class Bullet {
   }
 
   void show() {
+    if (this.x > -d/2 && this.x < 830 && this.y > 0 && this.y < height) {
+      image(waterMageMagic, x, y, 50, 50);
+    }
+  }
+
+  void showRing() {
     fill(c);
     noStroke();
     if (this.x > -d/2 && this.x < 830 && this.y > 0 && this.y < height) {
-      circle(x, y, d); // bullet
-    }
-  }
-}
-
-class bulletRing extends Bullet {
-   int timer = 0;
-
-  bulletRing(float x, float y) {
-    super(x, y, 0, 0, 300);
-    hp = 1;
-  }
-  void show() {
-    fill(red);
-    noStroke();
-    circle(x, y, d);
-  }
-
-  void act() {
-    timer += 1;
-    if (timer > 10) {
-      Bullet bullet = bullets.get(0);
-      bullet.hp = 0;
-      timer = 0;
+      circle(x, y, d);
     }
   }
 }

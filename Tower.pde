@@ -32,19 +32,20 @@ class Tower {
     towerMode = PLACING;
     towerType = type;
     if (towerType == GUN) threshold = 15;
-    if (towerType == AOE) threshold = 20;
+    if (towerType == AOE) threshold = 10;
     if (towerType == SNIPER) threshold = 30;
   }
 
   void show() {
     // GUN
     if (towerType == GUN) {
-      fill(blue);
-      strokeWeight(4);
-      stroke(black);
-      if (towerMode == PLACED) square(x, y, 40);
+      if (towerMode == PLACED) waterMage.show();
       else if (towerMode == PLACING) {
-        square(mouseX, mouseY, 40);
+        waterMage.w = 140;
+        waterMage.h = 140;
+        waterMage.x = mouseX;
+        waterMage.y = mouseY;
+        waterMage.show();
         if (mousePressed) { // when mouse pressed, place tower
           towerMode = PLACED;
           x = mouseX;
@@ -55,12 +56,13 @@ class Tower {
 
     // SNIPER
     if (towerType == SNIPER) {
-      fill(purple);
-      strokeWeight(4);
-      stroke(black);
-      if (towerMode == PLACED) circle(x, y, 50);
+      if (towerMode == PLACED) guitarShooter.show();
       else if (towerMode == PLACING) {
-        circle(mouseX, mouseY, 50);
+        guitarShooter.x = mouseX;
+        guitarShooter.y = mouseY;
+        guitarShooter.w = 300;
+        guitarShooter.h = 230;
+        guitarShooter.show();
         if (mousePressed) { // when mouse pressed, place tower
           towerMode = PLACED;
           x = mouseX;
@@ -74,9 +76,13 @@ class Tower {
       fill(pink);
       strokeWeight(4);
       stroke(black);
-      if (towerMode == PLACED) triangle(x, y, x+50, y, x+25, y-50);
+      if (towerMode == PLACED) darkWizard.show();
       else if (towerMode == PLACING) {
-        triangle(mouseX, mouseY, mouseX+50, mouseY, mouseX+25, mouseY-50); // hovering bullet tower to place
+        darkWizard.x = mouseX;
+        darkWizard.y = mouseY;
+        darkWizard.w = 210;
+        darkWizard.h = 210;
+        darkWizard.show();
         if (mousePressed) { // when mouse pressed, place tower
           towerMode = PLACED;
           this.x = mouseX;
@@ -109,7 +115,7 @@ class Tower {
       cooldown++;
       if (cooldown >= threshold) {
         cooldown = 0; // reset cooldown
-        stroke(red);
+        stroke(#afe5e7);
         strokeWeight(6);
         line(this.x, this.y, mobX, mobY);
         mobs.get(0).hp -= 3;
@@ -119,13 +125,18 @@ class Tower {
   //=====================================================================================================================================
 
   void AoEAct(float x, float y) {
-    AoE_Ring ring = new AoE_Ring(x, y, 300);
-    rings.add(ring);
-
-    cooldown++;
-    if (cooldown > threshold) {
-      ring.act();
-      cooldown = 0;
+    Bullet bullet = new Bullet(this.x+6, this.y+10, 0, 0, 200, #884ce8);
+    int i = 0;
+    if (towerType == AOE) {
+      while (i < mobs.size()) {
+        cooldown++;
+        if (cooldown > 20) {
+          cooldown = 0;
+          bullet.showRing();
+          if (dist(bullet.x, bullet.y, mobs.get(i).x, mobs.get(i).y) < (mobs.get(i).d/2 + (bullet.d)/2)) mobs.get(i).hp -= 1;
+        }
+        i++;
+      }
     }
   }
 }
