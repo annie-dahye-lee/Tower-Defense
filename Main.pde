@@ -68,6 +68,9 @@ PImage waterMageMagic;
 PImage pWaterMage;
 PImage pGuitarShooter;
 PImage pDarkWizard;
+PImage ghost;
+PImage ghoul;
+PImage giant;
 
 Gif intro;
 Gif waterMage;
@@ -91,7 +94,7 @@ void setup() {
   makeButtons();
   makeNodes();
 
-  mode = BUILD; //MAP_SELECTION;
+  mode = INTRO; //MAP_SELECTION;
   map = 1;
 }
 
@@ -113,6 +116,9 @@ void initializeVariables() {
   path = loadImage("path.png");
   map2 = loadImage("map2.png");
   waterMageMagic = loadImage("waterMageMagic.png");
+  ghost = loadImage("ghost.gif");
+  ghoul = loadImage("ghoul.gif");
+  giant = loadImage("giant.gif");
 
   pWaterMage = loadImage("waterMage.gif");
   pGuitarShooter = loadImage("guitarShooter.gif");
@@ -137,11 +143,11 @@ void makeNodes() {
   map1nodes[1] = new Node(72, 426, 1, 0);
   map1nodes[2] = new Node(435, 424, 0, 1);
   map1nodes[3] = new Node(431, 534, -1, 0);
-  map1nodes[4] = new Node(126, 533, 0, 1);
+  map1nodes[4] = new Node(126, 534, 0, 1);
   map1nodes[5] = new Node(126, 634, 1, 0);
   map1nodes[6] = new Node(517, 634, 0, -1);
   map1nodes[7] = new Node(517, 315, -1, 0);
-  map1nodes[8] = new Node(169, 313, 0, -1);
+  map1nodes[8] = new Node(169, 315, 0, -1);
   map1nodes[9] = new Node(169, 135, 1, 0);
   map1nodes[10] = new Node(648, 135, 0, 1);
   map1nodes[11] = new Node(650, 522, 1, 0);
@@ -197,6 +203,5 @@ void draw() {
   } else if (mode == GAMEOVER) {
     gameOver();
   }
-
-  // println(mouseX + ", " + mouseY);
+  println(mouseX + ", " + mouseY);
 }

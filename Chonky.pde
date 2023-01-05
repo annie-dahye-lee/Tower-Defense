@@ -7,6 +7,11 @@ class Chonky extends Mob {
     hp = maxHp;
     value = 25;
     c = pink;
-    speed = 0.3;
+    speed = 1;
+  }
+  
+  void show() {
+    image(giant, x, y, d+30, d+20);
+    healthbar();
   }
 }

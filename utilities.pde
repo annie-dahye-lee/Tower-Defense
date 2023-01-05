@@ -6,25 +6,29 @@ void click() {
     wasPressed = false;
   }
 
-  if (start.clicked) mode = MAP_SELECTION;
+  //if (start.clicked) mode = MAP_SELECTION;
 
-  if (selectMap1.clicked) {
-    mode = PLAY;
-    map = 1;
-    nodes = 1;
-  }
+  //if (selectMap1.clicked) {
+  //  mode = PLAY;
+  //  map = 1;
+  //  nodes = 1;
+  //}
 
-  if (selectMap2.clicked) {
-    mode = PLAY;
-    map = 2;
-    nodes = 2;
-  }
+  //if (selectMap2.clicked) {
+  //  mode = PLAY;
+  //  map = 2;
+  //  nodes = 2;
+  //}
 
-  if (buildModeButton.clicked) {
-    mode = BUILD;
-  }
+  //if (buildModeButton.clicked) {
+  //  mode = BUILD;
+  //  //println("build");
+  //  println(mode);
+  //}
 
-  if (playButton.clicked) {
-    mode = PLAY;
-  }
+  //if (playButton.clicked) {
+  //  mode = PLAY;
+  //  //println("play");
+  //  println(mode);
+  //}
 }

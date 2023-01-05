@@ -46,7 +46,7 @@ class Tower {
         waterMage.x = mouseX;
         waterMage.y = mouseY;
         waterMage.show();
-        if (mousePressed) { // when mouse pressed, place tower
+        if (mousePressed && mouseX < 830) { // when mouse pressed, place tower
           towerMode = PLACED;
           x = mouseX;
           y = mouseY;
@@ -63,7 +63,7 @@ class Tower {
         guitarShooter.w = 300;
         guitarShooter.h = 230;
         guitarShooter.show();
-        if (mousePressed) { // when mouse pressed, place tower
+        if (mousePressed && mouseX < 830) { // when mouse pressed, place tower
           towerMode = PLACED;
           x = mouseX;
           y = mouseY;
@@ -73,9 +73,6 @@ class Tower {
 
     // AOE
     if (towerType == AOE) {
-      fill(pink);
-      strokeWeight(4);
-      stroke(black);
       if (towerMode == PLACED) darkWizard.show();
       else if (towerMode == PLACING) {
         darkWizard.x = mouseX;
@@ -83,7 +80,7 @@ class Tower {
         darkWizard.w = 210;
         darkWizard.h = 210;
         darkWizard.show();
-        if (mousePressed) { // when mouse pressed, place tower
+        if (mousePressed && mouseX < 830) { // when mouse pressed, place tower
           towerMode = PLACED;
           this.x = mouseX;
           this.y = mouseY;
@@ -125,7 +122,7 @@ class Tower {
   //=====================================================================================================================================
 
   void AoEAct(float x, float y) {
-    Bullet bullet = new Bullet(this.x+6, this.y+10, 0, 0, 200, #884ce8);
+    Bullet bullet = new Bullet(this.x+6, this.y+10, 0, 0, 400, #884ce8);
     int i = 0;
     if (towerType == AOE) {
       while (i < mobs.size()) {

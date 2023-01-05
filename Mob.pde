@@ -16,6 +16,8 @@ class Mob {
     this.y = y1;
     this.vx = vx1;
     this.vy = vy1;
+    this.hp = 3;
+    this.maxHp = 3;
   }
 
   // default
@@ -34,7 +36,8 @@ class Mob {
   void show() {
     fill(c);
     noStroke();
-    circle(x, y, d);
+    //circle(x, y, d);
+    image(ghost, x, y, d+30, d+20);
     healthbar();
   }
 
@@ -45,7 +48,7 @@ class Mob {
     int i = 0; // array length
     if (map == 1) {
       while (i < map1nodes.length) {
-        if (dist(map1nodes[i].x, map1nodes[i].y, x, y) < 5) { // check distance between mob position and nodes position
+        if (dist(map1nodes[i].x, map1nodes[i].y, x, y) < 7) { // check distance between mob position and nodes position
           vx = map1nodes[i].dx * speed; // change mob direction according to node direction
           vy = map1nodes[i].dy * speed;
         }
@@ -74,8 +77,12 @@ class Mob {
       }
       i++;
     }
-
     
+    if (x == 950) {
+      lives--;
+      x = 10;
+      y = 384;
+    }
   }
 
   ////AOE RING

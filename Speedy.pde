@@ -10,6 +10,20 @@ class Speedy extends Mob {
     speed = 3;
   }
 
-  void speedyAct() {
+ void show() {
+    image(ghoul, x, y, d+25, d+25);
+    healthbar();
+  }
+
+  void healthbar() {
+    rectMode(CORNER);
+    noStroke();
+    fill(black);
+    rect(x-27, y-(d+10)-2, 54, 24);//background
+    fill(red);
+    rect(x-25, y-(d+10), 50, 20);
+    fill(green);
+    rect(x-25, y-(d+11), hp*50/maxHp, 21);
+    rectMode(CENTER);
   }
 }

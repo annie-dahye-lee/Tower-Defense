@@ -15,15 +15,16 @@ void UI() {
 }
 
 void mapClicks() {
-  //if (selectMap1.clicked) {
-  //  map = 1;
-  //  nodes = 1;
-  //  println(mode);
-  //  mode = PLAY;
-  //}
-  //if (selectMap2.clicked) {
-  //  map = 2;
-  //  nodes = 2;
-  //  mode = PLAY;
-  //}
+  if (selectMap1.clicked) {
+    map = 1;
+    nodes = 1;
+    println(mode);
+    mode = PLAY;
+  }
+  
+  if (selectMap2.clicked) {
+    map = 2;
+    nodes = 2;
+    mode = PLAY;
+  }
 }

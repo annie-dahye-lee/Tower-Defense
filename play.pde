@@ -7,8 +7,8 @@ void play() {
   if (map == 2) drawMap2();
 
   playClicks();
-  playUI();
   animate();
+  playUI();
 }
 
 void drawMap1() {
@@ -25,13 +25,13 @@ void drawMap1() {
 }
 
 void drawMap2() {
-  image(map2, 300, 390, width, height+90);
-
   int i = 0;
   while (i < 5) {
     map2nodes[i].show();
     i++;
   }
+
+  image(map2, 300, 390, width, height+90);
 }
 
 void playUI() {
@@ -109,15 +109,18 @@ void playClicks() {
     currNumOfMobs = 0;
   }
 
-  //if (buildModeButton.clicked) {
-  //  mode = BUILD;
-  //  println("build");
-  //}
+  if (buildModeButton.clicked) {
+    mode = BUILD;
+    println("build");
+  }
 }
 
 void addWave() { // add wave
   while (mobs.size() < wave && currNumOfMobs != wave) {
-    if (map == 1) mobs.add(new Mob(10, 384, 5, 0, 3, white));
+    if (map == 1) {
+      // 10, 384
+      mobs.add(new Mob(10, 384, 5, 0, 3, white));
+    }
     if (map == 2) mobs.add(new Mob(17, 187, 5, 0, 3, white));
     currNumOfMobs++;
     this.x -= 80;
@@ -125,8 +128,16 @@ void addWave() { // add wave
     // chonky
     if (wave % 3 == 0 && currNumOfMobs != wave) {
       for (int i = 0; i < wave/3; i++) {
-        if (map == 1) mobs.add(new Chonky(10, 384, 5, 0)); // add new Mob obj to mobs ArrayList
-        if (map == 2) mobs.add(new Chonky(10, 384, 5, 0)); // add new Mob obj to mobs ArrayList
+        if (map == 1) {
+          Chonky chonk = new Chonky(10, 384, 3, 0);
+          mobs.add(chonk); // add new Mob obj to mobs ArrayList
+          chonk.act();
+        }
+        if (map == 2) {
+          Chonky chonk = new Chonky(32, 190, 3, 0);
+          mobs.add(chonk); // add new Mob obj to mobs ArrayList
+          chonk.act();
+        }
 
         currNumOfMobs++;
       }
